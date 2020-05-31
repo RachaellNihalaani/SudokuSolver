@@ -1,0 +1,158 @@
+from numpy import *
+from tkinter import *
+
+L = []
+L1 = []
+
+#Checks if cell is empty
+def isEmpty(i, j): 
+    if a[i, j] == 0: #if cell is empty
+        return True
+    else: # if cell is not empty
+        return False
+
+#Checks if number is in row
+def isInRow(r, n):
+    for i in range(9):
+        if n == a[r, i]: 
+            return False
+    return True
+
+#Checks if number is in column
+def isInColumn(c, n):
+    for i in range(9):
+        if n == a[i, c]:
+            return False
+    return True
+
+#Checks if number is in block
+def isInBlock(row, col, n):
+    i = 0
+    j = 0
+    
+    if 0 <= row <= 2: #First row of blocks
+        i = 0
+    elif 3 <= row <= 5: #Second row of blocks
+        i = 3
+    elif 6 <= row <= 8: #Third row of blocks
+        i = 6
+    if 0 <= col <= 2: #First row of columns
+        j = 0
+    elif 3 <= col <= 5: #Second row of columns
+        j = 3
+    elif 6 <= col <= 8: #Third row of columns
+        j = 6
+   
+    for x in range(i, i + 3):
+        for y in range(j, j + 3):
+            if a[x, y] == n:
+                return False
+    return True
+
+def set_click():
+    global a
+
+    for i in range(9):
+        l = []
+        for j in range(9):
+            if L[i][j].get() == "":
+                l.append(0)
+            else:
+                L[i][j].config(fg='gold')
+                l.append(int(L[i][j].get()))
+       
+        L1.append(l)
+    a = matrix(L1)
+
+
+def solveSudoku():
+    for row in range(9): #9 rows
+        for col in range(9): #9 columns
+            if isEmpty(row, col):
+                for number in range(1, 10): # checks if number is single digit
+                    if isInRow(row, number) and isInColumn(col, number) and isInBlock(row, col, number):
+                        a[row, col] = number
+                        setText(row, col, str(number))
+                        
+                        if solveSudoku():
+                            return True
+                        
+                        else:
+                            a[row, col] = 0
+            
+                    setText(row, col, 0)
+                return False
+            
+    return True
+
+
+def setText(i, j, text):
+    L[i][j].delete(0, END)
+    L[i][j].insert(0, text)
+    return
+
+#User Interface using Tkinter
+root = Tk()
+root.geometry("2000x750")
+
+#Frame
+f = Frame(root, bg='white', cursor='gumby', height=750, width=2000)
+f.place(x=0, y=0)
+
+#The "Rules" text
+r="RULES: \n\n1. There is only one valid solution to each Sudoku puzzle. The only way the puzzle can be considered solved correctly is when all 81 boxes contain numbers and the other Sudoku rules have been followed.\n\n2. When you start a game of Sudoku, some blocks will be pre-filled for you. You cannot change these numbers in the course of the game.\n\n3. Each column must contain all of the numbers 1 through 9 and no two numbers in the same column of a Sudoku puzzle can be the same.\n\n4. Each row must contain all of the numbers 1 through 9 and no two numbers in the same row of a Sudoku puzzle can be the same.\n\n5.  Each block must contain all of the numbers 1 through 9 and no two numbers in the same block of a Sudoku puzzle can be the same."
+
+rules = Label(f, text=r, font=("Courier", 12), bg="white", fg="black", justify='left', wraplength=600)
+rules.place(x=20, y=15)
+
+#The "How to get solution" text
+ht="HOW TO GET SOLUTION:\n\n1. Click on a cell and enter a number (between 1-9). Fill all the required cells.\n\n2. Click on the'Set the SUDOKU' button. All the entered numbers will turn to Gold.\n\n3. Click on the 'Get Solution' button.\n\n4. VOILA! your Sudoku has been solved!"
+
+howto = Label(f, text=ht, font=("Courier", 12), bg="white", fg="black", justify='left', wraplength=600)
+howto.place(x=20, y=450)
+
+#The title "SUDOKU"
+title = Label(f, text="SUDOKU", font=("Courier", 50), bg="black", fg="gold", relief=RAISED)
+title.place(x=800, y=15)
+
+#The cells of the Sudoku
+vertical = 100
+for row_cell in range(9):
+    cell_list = []
+    horizontal = 660
+    
+    #To add vertical space between boxes
+    if row_cell % 3 == 0:
+        vertical += 20 
+   
+    for j in range(9):
+
+        #To add horizontal space between boxes
+        if j % 3 == 0:
+            horizontal += 20
+        
+        x = StringVar()
+        
+        #Each individual cell
+        cell = Entry(f, width=2, font=("Courier", 25), textvariable=x, justify=CENTER, fg='white', bg='black')
+        cell.place(x=horizontal, y=vertical)
+        
+        cell_list.append(cell)
+       
+        horizontal += 50
+   
+    vertical += 50
+   
+    L.append(cell_list) 
+
+#The "Set the SUDOKU" button    
+setpuzzle_button = Button(f, text="Set the SUDOKU", width=-10, height=-5, bg='gold', fg='black', activebackground='dark goldenrod',
+            font=("Courier", 20), justify=CENTER, command=set_click, cursor='hand1')
+setpuzzle_button.place(x=660, y=620)
+
+#The "Get Solution" button
+getsolution_button = Button(f, text="Get Solution", width=-10, height=-5, bg='gold', fg='black', activebackground='dark goldenrod',
+            font=("Courier", 20), justify=CENTER, command=solveSudoku, cursor='hand1')
+getsolution_button.place(x=970, y=620)
+
+root.mainloop()
