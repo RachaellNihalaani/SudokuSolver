@@ -1,0 +1,140 @@
+OSTL Mini Project
+
+Title: 
+Sudoku Solver
+
+
+
+Problem Statement: 
+Implement a Sudoku solving algorithm, using backtracking, and using the Tkinter standard GUI library, to solve any possible Sudoku puzzle.
+
+
+
+Explanation:
+
+What is Sudoku?
+Sudoku is a logic-based puzzle. It is a type of constraint satisfaction problem, where the solver is given a finite number of objects (the numerals 1-9) and a set of conditions stating how the objects must be placed in relation to one another. The puzzle consists of a 9×9 grid further divided into nine 3×3 sub-grids (also called boxes, blocks, regions, or sub-squares).
+
+The objective is to place the digits within the grid so that each column, row, and block contains all of the digits from 1 to 9. Each puzzle is published with some of the cells already filled in, and those constraints help define the problem's difficulty level.
+
+Thus, we can also conclude that a Sudoku is considered wrongly filled if it satisfies any of these criteria:
+1.	Any row contains the same number more than once.
+2.	Any column contains the same number more than once.
+3.	Any 3x3 sub-matrix has the same number more than once.
+
+
+
+
+
+Rules of Sudoku:
+1.	There is only one valid solution to each Sudoku puzzle. The only way the puzzle can be considered solved correctly is when all 81 boxes contain numbers and the other Sudoku rules have been followed.
+
+2.	When you start a game of Sudoku, some blocks will be pre-filled for you. You cannot change these numbers in the course of the game.
+
+3.	Each column must contain all of the numbers 1 through 9 and no two numbers in the same column of a Sudoku puzzle can be the same.
+
+4.	Each row must contain all of the numbers 1 through 9 and no two numbers in the same row of a Sudoku puzzle can be the same.
+
+5.	Each block must contain all of the numbers 1 through 9 and no two numbers in the same block of a Sudoku puzzle can be the same.
+
+
+
+Python Libraries Used:
+1.	NumPy
+
+What is NumPy?
+NumPy is a python library used for working with arrays. It also has functions for working in domain of linear algebra, fourier transform, and matrices. NumPy stands for Numerical Python.
+
+
+Arrays in NumPy:
+Array in Numpy is a table of elements (usually numbers), all of the same type, indexed by a tuple of positive integers. In Numpy, number of dimensions of the array is called rank of the array. A tuple of integers giving the size of the array along each dimension is known as shape of the array. An array class in Numpy is called as ndarray. Elements in Numpy arrays are accessed by using square brackets and can be initialized by using nested Python Lists.
+
+
+
+
+2.	Tkinter
+
+What is Tkinter?
+Tkinter is the standard GUI library for Python. Python when combined with Tkinter provides a fast and easy way to create GUI applications. Tkinter provides a powerful object-oriented interface to the Tk GUI toolkit. GUI elements and their functionality are defined in the Tkinter module.
+
+
+Tkinter widgets used:
+a.	Frame: 
+The Frame widget is used as a container widget to organize other widgets.
+Properties:
+i.	bg - The normal background color displayed behind the label and indicator.
+ii.	cursor - If you set this option to a cursor name (arrow, dot etc.), the mouse cursor will change to that pattern when it is over the checkbutton.
+iii.	height - The vertical dimension of the new frame.
+iv.	width - The default width of a checkbutton is determined by the size of the displayed image or text. You can set this option to a number of characters and the checkbutton will always have room for that many characters.
+
+b.	Label: 
+The Label widget is used to display text. It can also be used to display images.
+Properties:
+i.	text - To display one or more lines of text in a label widget, set this option to a string containing the text. Internal newlines ("\n") will force a line break.
+ii.	font - If you are displaying text in this label (with the text or textvariable option, the font option specifies in what font that text will be displayed.
+iii.	bg - The normal background color displayed behind the label and indicator.
+iv.	fg - If you are displaying text or a bitmap in this label, this option specifies the color of the text. If you are displaying a bitmap, this is the color that will appear at the position of the 1-bits in the bitmap.
+v.	justify - Specifies how multiple lines of text will be aligned with respect to each other: LEFT for flush left, CENTER for centered (the default), or RIGHT for right-justified.
+vi.	wraplength - You can limit the number of characters in each line by setting this option to the desired number. The default value, 0, means that lines will be broken only at newlines.
+vii.	relief - Specifies the appearance of a decorative border around the label. The default is FLAT; for other values.
+
+c.	Entry:
+The Entry widget is used to display a single-line text field for accepting values from a user.
+Properties:
+i.	width - The default width of a checkbutton is determined by the size of the displayed image or text. You can set this option to a number of characters and the checkbutton will always have room for that many characters.
+ii.	font - The font used for the text.
+iii.	textvariable - In order to be able to retrieve the current text from your entry widget, you must set this option to an instance of the StringVar class.
+iv.	justify - If the text contains multiple lines, this option controls how the text is justified: CENTER, LEFT, or RIGHT.
+v.	fg - The color used to render the text.
+vi.	bg - The normal background color displayed behind the label and indicator.
+
+d.	Button: 
+The Button widget is used to display buttons in your application.	
+Properties:
+i.	text - Text to be displayed on the button.
+ii.	width - Width of the button in letters (if displaying text) or pixels (if displaying an image).
+iii.	height - Height of the button in text lines (for textual buttons) or pixels (for images).
+iv.	bg - Normal background color.
+v.	fg - Normal foreground (text) color.
+vi.	activebackground - Background color when the button is under the cursor.
+vii.	font - Text font to be used for the button's label.
+viii.	justify - How to show multiple text lines: LEFT to left-justify each line; CENTER to center them; or RIGHT to right-justify.
+ix.	command - Function or method to be called when the button is clicked.
+x.	cursor – Cursor when mouse hovers over the button.
+
+
+What is Backtracking?
+Backtracking is an algorithmic-technique for solving problems recursively by trying to build a solution incrementally. It involves choosing only option out of many possibilities. We begin by choosing an option and backtrack from it, if we reach a state where we conclude that this specific option does not give the required solution. We repeat these steps by going across each available option until we get the desired solution.
+
+
+
+How backtracking has been used in this program:
+In the Sudoku solving Problem, we try filling digits one by one. Whenever we find that current digit cannot lead to a solution, we remove it (backtrack) and try next digit. This is better than naive approach (generating all possible combinations of digits and then trying every combination one by one) as it drops a set of permutations whenever it backtracks.
+
+ The steps which we will follow are:
+1.	If there are no unallocated cells, then the Sudoku is already solved. We will just return true.
+2.	Or else, we will fill an unallocated cell with a digit between 1 and 9 so that there are no conflicts in any of the rows, columns, or the 3x3 sub-matrices.
+3.	Now, we will try to fill the next unallocated cell and if this happens successfully, then we will return true.
+4.	Else, we will come back and change the digit we used to fill the cell. If there is no digit which fulfils the need, then we will just return false as there is no solution of this Sudoku.
+
+
+
+
+
+Functions used:
+Function	Description
+isEmpty():	Searches the grid to find an entry that is still unassigned. If found, the reference parameters (row, col) will be set the location that is unassigned, and true is returned. If no unassigned entries remain, false is returned.
+
+isInRow():	Returns a boolean which indicates whether any entry already assigned in the specified row matches the given number. If a match is found, false is returned. If a match is not found, true is returned.
+
+isInColumn():	Returns a boolean which indicates whether any entry already assigned in the specified column matches the given number. If a match is found, false is returned. If a match is not found, true is returned.
+
+isInBlock():	Returns a boolean which indicates whether any entry already assigned in the specified block matches the given number. If a match is found, false is returned. If a match is not found, true is returned.
+
+set_click():	Sets the Sudoku. Fixes the entered values as the Sudoku question. Changes the text color.
+
+solveSudoku():	Takes a partially filled-in grid and attempts to assign values to all unassigned locations in such a way to meet the requirements for Sudoku solution (non-duplication across rows, columns, and boxes).
+
+setText():	Sets the text value of the selected cell, as what the user has entered.
+
+
